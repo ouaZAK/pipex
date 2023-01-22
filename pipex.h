@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:45:37 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/21 15:20:07 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/22 08:42:20 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ char	**ft_split(char const *s, char c);
 char	*ft_strjoin_2(char *s1, char *s2);
 void	ft_free(char **str, int i);
 void	exit_msg(char *str);
+void	free_exit(char *str);
 
 #endif
