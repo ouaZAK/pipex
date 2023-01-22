@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 08:59:06 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/22 19:14:16 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/22 19:55:31 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,28 +90,33 @@ int	check_bash(char *str)
 	return (0);
 }
 
-char	**check_cmd(char *str, char **env)
+int	check_normal_cmd(char *str, char *path)
+{
+	path = join_path_to_cmd(path, str);
+	if (access(path, X_OK) == 0)
+		return (1);
+	return (0);
+}
+
+char	**check_cmd(char *str, char **env, char *path)
 {
 	char	**s;
 	int		i;
 
 	i = -1;
 	s = ft_split(str, ' ');
-	
 	if (str[0] == '/' && access(s[0], X_OK) != -1)
 	{
 		ft_free(s, 0);
 		s = ft_split(str, '/');
 		while (s[++i])
-		{
 			if (!s[i + 1])
 				return (s);
-		}
 		free(s);
 	}
 	else if ((str[0] == '.' && access(str, X_OK) != -1))
 		return (s);
-	else if (check_bash(s[0]) == 1)
+	else if (check_bash(s[0]) == 1 || check_normal_cmd(s[0], path) == 1)
 		return (s);
 	exit_msg("pipex :  not script not cmd");
 	return (NULL);
@@ -140,13 +145,13 @@ void	child(char **av, char **env, char *path, int pfd[])
 
 	i = 0;
 	close(pfd[0]);
-	cmd = check_cmd(av[2], env);
+	cmd = check_cmd(av[2], env, path);
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 		exit_msg("child fd error\n");
 	dup2(pfd[1], 1);
 	dup2(fd, 0);
-	if (cmd && cmd[0][0] != '.' && check_bash(cmd[0]) != 1)
+	if (cmd[0][0] != '.' && check_bash(cmd[0]) != 1)
 		executingu(cmd, path, env, av);
 	else if (cmd[0][0] == '.')
 		execve(av[2], cmd, env);
