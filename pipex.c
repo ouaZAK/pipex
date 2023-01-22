@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 08:59:06 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/22 11:40:01 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/22 19:14:16 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ char	*join_path_to_cmd(char *path, char *cmd)
 		if (!access(tmp, X_OK))
 		{
 			ft_free(str, ++y);
+			ft_free(cpy, 0);
 			return (tmp);
 		}
 		free(tmp);
@@ -72,47 +73,87 @@ char	*check_errors(int ac, char **av, char **env, char *path)
 	return (path);
 }
 
-char	*check_cmd(char *str)
+int	check_bash(char *str)
+{
+	char *tmp;
+	int	i;
+
+	i = 0;
+	tmp = strdup("bash"); // 
+	while (str[i] && tmp[i] && str[i] == tmp[i])
+		i++;
+	if (!str[i] && !tmp[i])
+	{
+		free(tmp);
+		return (1);
+	}
+	return (0);
+}
+
+char	**check_cmd(char *str, char **env)
 {
 	char	**s;
 	int		i;
 
 	i = -1;
 	s = ft_split(str, ' ');
-	// ft_putstr_fd(str, 1);
-	// printf("%d\n",access(str, X_OK));
+	
 	if (str[0] == '/' && access(s[0], X_OK) != -1)
 	{
+		ft_free(s, 0);
 		s = ft_split(str, '/');
 		while (s[++i])
+		{
 			if (!s[i + 1])
-				return (s[i]);
+				return (s);
+		}
+		free(s);
 	}
-	else if ((str[0] == '.' && str[1] == '/' && access(str, X_OK) != -1)
-		|| (str[0] != '.' && str[1] != '/' && access(str, X_OK) != -1))
-		return (str);
+	else if ((str[0] == '.' && access(str, X_OK) != -1))
+		return (s);
+	else if (check_bash(s[0]) == 1)
+		return (s);
+	exit_msg("pipex :  not script not cmd");
 	return (NULL);
+}
+
+void	executingu(char **cmd, char *path, char **env, char **av)
+{
+	char	**str;
+	int		i;
+
+	i = 0;
+	while (cmd && cmd[i + 1])
+		i++;
+	path = join_path_to_cmd(path, cmd[i]);
+	str = ft_split(cmd[i], ' ');
+	ft_free(cmd, 0);
+	execve(path, str, env);
 }
 
 void	child(char **av, char **env, char *path, int pfd[])
 {
 	char	**str;
-	char	*cmd;
+	char	**cmd;
 	int		fd;
+	int		i;
 
+	i = 0;
 	close(pfd[0]);
-	cmd = check_cmd(av[2]);
+	cmd = check_cmd(av[2], env);
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 		exit_msg("child fd error\n");
 	dup2(pfd[1], 1);
 	dup2(fd, 0);
-	// ft_putstr_fd(cmd, 1);
-	if (cmd)
+	if (cmd && cmd[0][0] != '.' && check_bash(cmd[0]) != 1)
+		executingu(cmd, path, env, av);
+	else if (cmd[0][0] == '.')
+		execve(av[2], cmd, env);
+	else if (check_bash(cmd[0]) == 1)
 	{
-		path = join_path_to_cmd(path, cmd);
-		str = ft_split(cmd, ' ');
-		execve(path, str, env);
+		path = join_path_to_cmd(path, cmd[0]);
+		execve(path, cmd, env);
 	}
 	else
 		path = join_path_to_cmd(path, av[2]);
