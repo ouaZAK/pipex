@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 08:59:06 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/23 11:52:21 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/23 12:20:05 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	child(char **av, char **env, char *path, int pfd[])
 
 	close(pfd[0]);
 	cmd = ft_split(av[2], ' ');
+	if (!cmd[0])
+		exit_msg("pipex : command not found: ??");
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 		exit_msg("child fd error\n");
@@ -34,6 +36,8 @@ void	parent(char **av, char **env, char *path, int pfd[])
 
 	close(pfd[1]);
 	cmd = ft_split(av[3], ' ');
+	if (!cmd[0])
+		exit_msg("\npipex : command not found: ??");
 	fd = open(av[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
 		exit_msg("parent fd error\n");
