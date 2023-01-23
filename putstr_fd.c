@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:45:10 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/17 11:22:22 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/23 11:15:19 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,22 @@ void	ft_putnbr_fd(int n, int fd)
 	}
 	else
 		ft_putchar_fd(n + 48, fd);
+}
+
+char	*ft_strdup(const char *s1)
+{
+	int		i;
+	char	*copy;
+
+	i = 0;
+	copy = (char *)malloc(sizeof(char) * ft_strlen(s1) + 1);
+	if (!copy)
+		return (0);
+	while (s1[i])
+	{
+		copy[i] = s1[i];
+		i++;
+	}
+	copy[i] = '\0';
+	return (copy);
 }
