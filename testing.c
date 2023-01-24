@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:19:50 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/21 17:34:09 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/24 10:07:36 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int main(int ac, char **av, char **env)
 	}
 */
 
-	
+	/*
 	// ########################################### sending string trough pipe
 	char	*str = NULL;
 	char 	c;

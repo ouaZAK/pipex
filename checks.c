@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:12:29 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/23 11:19:47 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/24 10:07:54 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,29 @@ char	*check_errors(int ac, char **av, char **env, char *path)
 
 int	check_bash(char *str)
 {
-	char *tmp;
-	int	i;
+	char	**cpy;
+	char	*tmp;
+	int		i;
+	int		y;
 
 	i = 0;
+	y = 0;
+	cpy = NULL;
 	tmp = "bash";
+	if (str[i] == '/')
+	{
+		cpy = ft_split(str, '/');
+		while (cpy[i] && cpy[i + 1])
+			i++;
+		while (cpy[i][y] && tmp[y] && cpy[i][y] == tmp[y])
+		y++;
+		ft_free(cpy, 0);
+		if (!tmp[y])
+			return (1);
+	}
 	while (str[i] && tmp[i] && str[i] == tmp[i])
 		i++;
-	if (!str[i] && !tmp[i])
+	if (!tmp[i])
 		return (1);
 	return (0);
 }
