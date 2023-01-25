@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 10:36:50 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/25 15:28:25 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:30:00 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,5 @@ void	free_exit(char *str)
 {
 	ft_putstr_fd(str, 2);
 	free(str);
-	exit(1);
+	exit(127);
 }

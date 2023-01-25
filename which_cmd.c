@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 10:59:39 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/25 15:57:25 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/25 20:01:38 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2 && s2[j])
 		str[i++] = s2[j++];
 	str[i] = '\0';
-	// free(s1);
 	s1 = NULL;
 	return (str);
 }
@@ -55,10 +54,6 @@ void	which_cmd(char **env, char *path, char **cmd)
 		execve(cmd[0], cmd, env);
 		exit_msg(ft_strjoin("pipex: permission denied: ", cmd[0]), PERM_D);
 	}
-	// else if (!ft_strcmp(cmd[0], "awk"))
-	// {
-		
-	// }
 	else
 	{
 		path = get_path(env, cmd[0]);

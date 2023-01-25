@@ -1,0 +1,12 @@
+Makefile
+USER=zouaraqa
+path.c
+pipex
+pipex.c
+pipex.h
+putstr_fd.c
+sub
+text
+utils1.c
+utils2.c
+which_cmd.c

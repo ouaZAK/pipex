@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:11:16 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/25 15:46:22 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/25 20:04:54 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ char	*get_path(char **env, char *cmd)
 	while (env[++y])
 	{
 		x = 0;
-		while (env[y][x] == path[x])
-			x++;
+		while (env[y][x] && env[y][x] == path[x])
+				x++;
 		if (!env[y][x + 1])
 			return (NULL);
 		if (!path[x])
-			return (env[y]);
+			return (&env[y][x]);
 	}
 	exit_msg(ft_strjoin("pipex: command not found : ", cmd), COM_N);
 	return (NULL);
@@ -56,4 +56,3 @@ char	*join_path_to_cmd(char *path, char *cmd)
 	free(str);
 	return (path);
 }
-
