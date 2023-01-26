@@ -6,13 +6,13 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 16:37:32 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/21 10:25:15 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/26 09:38:05 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	*ft_calloc(size_t count, size_t size)
+void	*ft_calloc(size_t count, size_t size)
 {
 	size_t	i;
 	void	*cal;

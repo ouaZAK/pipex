@@ -5,6 +5,7 @@ RM = rm -rf
 SRC =	pipex.c \
 		utils1.c \
 		utils2.c \
+		utils3.c \
 		path.c \
 		which_cmd.c \
 		putstr_fd.c
