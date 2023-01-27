@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 09:04:04 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/26 12:58:25 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/26 15:32:47 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		str[i++] = s2[j++];
 	str[i] = '\0';
 	s1 = NULL;
+	free(s1);
 	return (str);
 }
 

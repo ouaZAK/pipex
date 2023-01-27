@@ -8,7 +8,9 @@ SRC =	pipex.c \
 		utils3.c \
 		path.c \
 		which_cmd.c \
-		putstr_fd.c
+		awk_check.c \
+		putstr_fd.c \
+		print.c
 
 OBJ = $(SRC:.c=.o)
 

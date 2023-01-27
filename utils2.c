@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 10:36:50 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/25 16:30:00 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/27 09:46:51 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char	*ft_strjoin_2(char *s1, char *s2)
 
 void	ft_free(char **str, int i)
 {
+	if (!str)
+		return ;
 	while (str[i])
 		free(str[i++]);
 	free(str);
@@ -60,13 +62,14 @@ void	ft_free(char **str, int i)
 void	exit_msg(char *str, int nb)
 {
 	ft_putstr_fd(str, 2);
-	ft_putchar_fd('\n', 2);
 	exit(nb);
 }
 
-void	free_exit(char *str)
+void	free_exit_msg(char *str, int nb, char **s)
 {
 	ft_putstr_fd(str, 2);
+	ft_putchar_fd('\n', 2);
 	free(str);
-	exit(127);
+	ft_free(s, 0);
+	exit(nb);
 }

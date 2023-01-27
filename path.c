@@ -6,13 +6,13 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:11:16 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/25 20:04:54 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/27 12:42:47 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*get_path(char **env, char *cmd)
+char	*get_path(char **env, char *cmd, char *av)
 {
 	char	*path;
 	int		x;
@@ -30,7 +30,11 @@ char	*get_path(char **env, char *cmd)
 		if (!path[x])
 			return (&env[y][x]);
 	}
-	exit_msg(ft_strjoin("pipex: command not found : ", cmd), COM_N);
+	y = -1;
+	while (env[++y])
+		if (!ft_strstr(env[y], "path=") && (av[0] == '.' || av[0] == '/'))
+			return ("/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki");
+	free_exit_msg(ft_strjoin("pipex: command not found : ", cmd), COM_N, NULL);
 	return (NULL);
 }
 

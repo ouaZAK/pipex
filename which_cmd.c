@@ -6,108 +6,39 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 10:59:39 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/26 13:21:07 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/27 12:24:15 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	check_print_errors(char *path, char *cmd, char c)
+void	check_print_errors(char *path, char *cmd, char c, char **cmds)
 {
 	if (access(path, F_OK) && c == 'c')
-		exit_msg(ft_strjoin("pipex: command not found: ", cmd), COM_N);
+		free_exit_msg(ft_strjoin("pipex: command not found: ", cmd), \
+			COM_N, cmds);
 	else if (access(path, F_OK) && c == 'p')
-		exit_msg(ft_strjoin("pipex: no such file or directory: ", cmd), NF_ND);
+		free_exit_msg(ft_strjoin("pipex: no such file or directory: ", cmd), \
+			NF_ND, cmds);
 	else if (access(path, X_OK))
-		exit_msg(ft_strjoin("pipex: permission denied: ", cmd), PERM_D);
+		free_exit_msg(ft_strjoin("pipex: permission denied: ", cmd), \
+			PERM_D, cmds);
 }
 
 void	which_cmd(char **env, char *path, char **cmd)
 {
 	if (cmd[0][0] == '/' || cmd[0][0] == '.')
 	{
-		check_print_errors(cmd[0], cmd[0], 'p');
+		check_print_errors(cmd[0], cmd[0], 'p', cmd);
 		execve(cmd[0], cmd, env);
-		exit_msg(ft_strjoin("pipex: permission denied: ", cmd[0]), PERM_D);
+		free_exit_msg(ft_strjoin("pipex: permission denied: ", cmd[0]), \
+			PERM_D, cmd);
 	}
 	else
 	{
-		path = get_path(env, cmd[0]);
+		path = get_path(env, cmd[0], NULL);
 		path = join_path_to_cmd(path, cmd[0]);
-		check_print_errors(path, cmd[0], 'c');
+		check_print_errors(path, cmd[0], 'c', cmd);
 		execve(path, cmd, env);
 	}
-}
-
-static int	countingu(char *str, int len, char c)
-{
-	int	count;
-
-	count = 0;
-	while (str[len] != c && len >= 0)
-	{
-		len--;
-		count++;
-	}
-	return (count);
-}
-
-static void	*awk_split(char *str)
-{
-	char	*s;
-	int		i;
-	int		end;
-	int		len;
-
-	i = 0;
-	end = 0;
-	len = ft_strlen(str);
-	while (str[i] && str[i] != '"' && str[i] != '\'')
-		i++;
-	if (i == len)
-	{
-		while (str[end] && str[end] != ' ')
-			end++;
-		return (&str[end + 1]);
-	}
-	else if (str[i] == '"')
-		end = countingu(str, len, '"');
-	else if (str[i] == '\'')
-		end = countingu(str, len, '\'');
-	len -= i + end;
-	s = ft_calloc(sizeof(char), len);
-	end = 0;
-	i++;
-	while (str[i] && len-- > 1)
-		s[end++] = str[i++];
-	return (s);
-}
-
-void	check_awk(char *str, char **env)
-{
-	char	**cmd;
-	char	*path;
-	int		i;
-	int		y;
-
-	i = 0;
-	y = -1;
-	path = NULL;
-	while (str[i] && str[i] != ' ')
-		i++;
-	cmd = ft_calloc(sizeof(char *), 3);
-	cmd[0] = ft_calloc(sizeof(char), i + 1);
-	while (++y < i)
-		cmd[0][y] = str[y];
-	if (str[0] == '/')
-		check_print_errors(cmd[0], cmd[0], 'p');
-	else
-	{
-		path = get_path(env, cmd[0]);
-		path = join_path_to_cmd(path, cmd[0]);
-		check_print_errors(path, cmd[0], 'c');
-	}
-	cmd[1] = awk_split(str);
-	cmd[2] = NULL;
-	execve(path, cmd, env);
 }

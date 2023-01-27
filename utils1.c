@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 16:37:32 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/26 09:38:05 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/27 09:17:24 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	**ft_split(char const *s, char c)
 	char	**str;
 
 	if (!s)
-		return (0);
+		return (NULL);
 	nbw = word_count((char *)s, c);
 	str = (char **)ft_calloc(nbw + 1, sizeof(char *));
 	if (!str)
