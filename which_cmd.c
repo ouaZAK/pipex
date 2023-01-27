@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 10:59:39 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/27 12:24:15 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/27 15:55:22 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	which_cmd(char **env, char *path, char **cmd)
 	}
 	else
 	{
-		path = get_path(env, cmd[0], NULL);
 		path = join_path_to_cmd(path, cmd[0]);
 		check_print_errors(path, cmd[0], 'c', cmd);
 		execve(path, cmd, env);
