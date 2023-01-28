@@ -6,21 +6,11 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 09:04:04 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/26 15:32:47 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/28 12:11:38 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
-
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return (s1[i] - s2[i]);
-}
 
 char	*ft_strjoin(char *s1, char *s2)
 {

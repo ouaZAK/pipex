@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:45:37 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/27 12:23:52 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/28 12:15:21 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,16 @@
 
 //test ms7 dakchi
 void	print(char *str);
-void	ft_putchar_fd(char c, int fd);
-void	ft_putstr_fd(char *s, int fd);
-void	ft_putnbr_fd(int n, int fd);
 
 size_t	ft_strlen(const char *s);
-char	*ft_strdup(const char *s1);
 char	**ft_split(char const *s, char c);
 char	*ft_strjoin_2(char *s1, char *s2);
 char	*ft_strjoin(char *s1, char *s2);
+void	ft_putstr_fd(char *s, int fd);
 void	*ft_calloc(size_t count, size_t size);
 void	ft_free(char **str, int i);
 void	free_exit_msg(char *str, int nb, char **s);
 void	exit_msg(char *str, int nb);
-int		ft_strcmp(char *s1, char *s2);
 int		ft_strstr(char *haystack, char *needle);
 
 //func
