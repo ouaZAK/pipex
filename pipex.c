@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 08:59:06 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/28 09:48:25 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/01 12:41:38 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	parent(char **av, char **env, int pfd[])
 	if (fd == -1)
 		free_exit_msg(ft_strjoin("pipex: permission denied: ", av[4]), 1, NULL);
 	dup2(fd, 1);
-	if (ft_strstr(av[3], "awk") == 1 || ft_strstr(av[2], "sed") == 1)
+	if (ft_strstr(av[3], "awk") == 1 || ft_strstr(av[3], "sed") == 1)
 		check_awk(av[3], env);
 	cmd = ft_split(av[3], ' ');
 	if (!cmd[0])

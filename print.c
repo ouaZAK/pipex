@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 10:44:26 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/27 10:44:34 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/01/29 14:41:41 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 void	print(char *str)
 {
 	ft_putstr_fd(str, 2);
-	ft_putchar_fd('\n', 2);
+	ft_putstr_fd("\n", 2);
 }

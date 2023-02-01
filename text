@@ -1,0 +1,9 @@
+int	check_sub_dir(char *str)
+	int	i;
+char	*add_point(char *str)
+	int		i;
+	int		y;
+void	check_print_errors(char *path, char *cmd, char c, char **cmds)
+		cmd[0] = add_point(cmd[0]);
+		check_print_errors(cmd[0], cmd[0], 'p', cmd);
+		check_print_errors(path, cmd[0], 'c', cmd);

@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:45:37 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/28 12:15:21 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/01 12:37:49 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 //test ms7 dakchi
 void	print(char *str);
+void	ft_putnbr_fd(int n, int fd);
 
 size_t	ft_strlen(const char *s);
 char	**ft_split(char const *s, char c);
