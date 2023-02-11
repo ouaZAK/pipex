@@ -6,13 +6,13 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 08:59:06 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/01 12:41:38 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/11 11:22:28 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	child(char **av, char **env, int pfd[])
+static void	child(char **av, char **env, int pfd[], t_vars *va)
 {
 	char	**cmd;
 	char	*path;
@@ -26,8 +26,8 @@ void	child(char **av, char **env, int pfd[])
 		free_exit_msg(ft_strjoin("pipex: no such file or directory: ", \
 			av[1]), 1, NULL);
 	dup2(fd, 0);
-	if (ft_strstr(av[2], "awk") == 1 || ft_strstr(av[2], "sed") == 1)
-		check_awk(av[2], env);
+	if (ft_strstr(av[2], "'") == 1 || ft_strstr(av[2], "\"") == 1)
+		check_quote(av[2], env, va);
 	cmd = ft_split(av[2], ' ');
 	if (!cmd[0])
 		exit_msg("pipex : command not found: ", COM_N);
@@ -35,7 +35,7 @@ void	child(char **av, char **env, int pfd[])
 	which_cmd(env, path, cmd);
 }
 
-void	parent(char **av, char **env, int pfd[])
+static void	parent(char **av, char **env, int pfd[], t_vars *va)
 {
 	char	**cmd;
 	char	*path;
@@ -48,8 +48,8 @@ void	parent(char **av, char **env, int pfd[])
 	if (fd == -1)
 		free_exit_msg(ft_strjoin("pipex: permission denied: ", av[4]), 1, NULL);
 	dup2(fd, 1);
-	if (ft_strstr(av[3], "awk") == 1 || ft_strstr(av[3], "sed") == 1)
-		check_awk(av[3], env);
+	if (ft_strstr(av[3], "'") == 1 || ft_strstr(av[3], "\"") == 1)
+		check_quote(av[3], env, va);
 	cmd = ft_split(av[3], ' ');
 	if (!cmd[0])
 		exit_msg("pipex : command not found: ", COM_N);
@@ -59,6 +59,7 @@ void	parent(char **av, char **env, int pfd[])
 
 int	main(int ac, char **av, char **env)
 {
+	t_vars	va;
 	int		pfd[2];
 	int		pid;
 
@@ -70,10 +71,10 @@ int	main(int ac, char **av, char **env)
 	if (pid == -1)
 		exit_msg("error in fork", 2);
 	if (pid == 0)
-		child(av, env, pfd);
+		child(av, env, pfd, &va);
 	else
 	{
+		parent(av, env, pfd, &va);
 		wait(NULL);
-		parent(av, env, pfd);
 	}
 }

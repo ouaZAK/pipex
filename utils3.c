@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/26 09:04:04 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/28 12:11:38 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/11 11:08:15 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,19 @@ int	ft_strstr(char *haystack, char *needle)
 		i++;
 	}
 	return (0);
+}
+
+char	*cpy(char *dst, char *src, int len)
+{
+	int	i;
+
+	i = 0;
+	if (!dst || !src)
+		return (0);
+	while (src[i] && i < len)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	return (dst);
 }
