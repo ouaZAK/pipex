@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 10:59:39 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/12 12:00:47 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/12 16:02:19 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ char	*add_point(char *str)
 void	check_print_errors(char *path, char *cmd, char c, char **cmds)
 {
 	if (access(path, F_OK) && c == 'c')
-		free_exit_msg(ft_strjoin("pipex: command not found: ", cmd), \
+		free_exit_msg(ft_strjoin(cmd, ": command not found"), \
 			COM_N, cmds);
 	else if (access(path, F_OK) && c == 'p')
-		free_exit_msg(ft_strjoin("pipex: no such file or directory: ", cmd), \
+		free_exit_msg(ft_strjoin(cmd, ": no such file or directory"), \
 			NF_ND, cmds);
 	else if (access(path, X_OK))
-		free_exit_msg(ft_strjoin("pipex: permission denied: ", cmd), \
+		free_exit_msg(ft_strjoin(cmd, ": permission denied: "), \
 			PERM_D, cmds);
 }
 
@@ -62,7 +62,7 @@ void	which_cmd(char **env, char *path, char **cmd)
 	{
 		check_print_errors(cmd[0], cmd[0], 'p', cmd);
 		execve(cmd[0], cmd, env);
-		free_exit_msg(ft_strjoin("pipex: permission denied: ", cmd[0]), \
+		free_exit_msg(ft_strjoin(cmd[0], "permission denied: "), \
 			PERM_D, cmd);
 	}
 	else

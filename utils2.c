@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 10:36:50 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/28 12:15:01 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:53:22 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	exit_msg(char *str, int nb)
 
 void	free_exit_msg(char *str, int nb, char **s)
 {
+	ft_putstr_fd("pipex: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("\n", 2);
 	free(str);

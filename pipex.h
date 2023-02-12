@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 10:45:37 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/11 11:10:40 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/12 15:28:29 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,9 @@ void	free_exit_msg(char *str, int nb, char **s);
 void	exit_msg(char *str, int nb);
 
 //func
-char	*get_path(char **env, char *cmd, char *av);
+char	*get_path(char **env);
 char	*join_path_to_cmd(char *path, char *cmd);
 void	which_cmd(char **env, char *path, char **cmd);
 void	check_print_errors(char *path, char *cmd, char c, char **cmds);
-void	check_quote(char *str, char **env, t_vars *va);
 char	**split_it(char *str, t_vars *va);
 #endif
