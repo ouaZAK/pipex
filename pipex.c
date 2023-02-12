@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 08:59:06 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/11 11:22:28 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/11 12:42:24 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static void	child(char **av, char **env, int pfd[], t_vars *va)
 		free_exit_msg(ft_strjoin("pipex: no such file or directory: ", \
 			av[1]), 1, NULL);
 	dup2(fd, 0);
-	if (ft_strstr(av[2], "'") == 1 || ft_strstr(av[2], "\"") == 1)
-		check_quote(av[2], env, va);
-	cmd = ft_split(av[2], ' ');
+	while (*av[2] && *av[2] == ' ')
+		av[2]++;
+	cmd = split_it(av[2], va);
 	if (!cmd[0])
 		exit_msg("pipex : command not found: ", COM_N);
 	path = get_path(env, cmd[0], av[2]);
@@ -48,9 +48,9 @@ static void	parent(char **av, char **env, int pfd[], t_vars *va)
 	if (fd == -1)
 		free_exit_msg(ft_strjoin("pipex: permission denied: ", av[4]), 1, NULL);
 	dup2(fd, 1);
-	if (ft_strstr(av[3], "'") == 1 || ft_strstr(av[3], "\"") == 1)
-		check_quote(av[3], env, va);
-	cmd = ft_split(av[3], ' ');
+	while (*av[3] && *av[3] == ' ')
+		av[3]++;
+	cmd = split_it(av[3], va);
 	if (!cmd[0])
 		exit_msg("pipex : command not found: ", COM_N);
 	path = get_path(env, cmd[0], av[3]);

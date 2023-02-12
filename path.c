@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:11:16 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/28 09:47:52 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/12 11:57:20 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,5 @@ char	*join_path_to_cmd(char *path, char *cmd)
 		free(tmp);
 	}
 	free(str);
-	return (path);
+	return (NULL);
 }
