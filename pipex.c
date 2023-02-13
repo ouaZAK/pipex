@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 08:59:06 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/13 09:43:17 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/13 10:08:16 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	child(char **av, char **env, int pfd[], t_vars *va)
 	dup2(fd, 0);
 	cmd = split_it(av[2], va);
 	if (!cmd[0])
-		free_exit_msg(ft_strjoin(av[2], ": command not found"), COM_N, NULL);
+		free_exit_msg(ft_strjoin(av[2], ": command not found"), COM_N, cmd);
 	path = get_path(env);
 	which_cmd(env, path, cmd);
 }
@@ -48,7 +48,7 @@ static void	parent(char **av, char **env, int pfd[], t_vars *va)
 	dup2(fd, 1);
 	cmd = split_it(av[3], va);
 	if (!cmd[0])
-		free_exit_msg(ft_strjoin(av[3], ": command not found"), COM_N, NULL);
+		free_exit_msg(ft_strjoin(av[3], ": command not found"), COM_N, cmd);
 	path = get_path(env);
 	which_cmd(env, path, cmd);
 }
