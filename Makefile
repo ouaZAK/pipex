@@ -18,7 +18,7 @@ OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
 
-$(NAME) : $(SRC)
+$(NAME) : $(OBJ)
 	@$(CC) $(FLAGS) $^ -o $@
 
 clean :

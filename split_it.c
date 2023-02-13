@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 10:53:03 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/11 12:28:33 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/13 09:55:29 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	**split_it(char *str, t_vars *va)
 			va->args[va->y++] = quote_split(&str[va->i + 1], va->split_with);
 			skip_word(va, str, 'q');
 		}
-		else
+		else if (str[va->i] != ' ')
 		{
 			skip_word(va, str, ' ');
 			va->args[va->y] = ft_calloc(sizeof(char), va->count + 1);
