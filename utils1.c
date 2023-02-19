@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 16:37:32 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/01/27 09:17:24 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/19 14:48:30 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	word_count(char *str, char c)
 	{
 		while (*str && *str == c)
 			str++;
-		if (str)
+		if (*str)
 			count++;
 		while (*str && *str != c)
 			str++;

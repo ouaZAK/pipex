@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/16 10:45:37 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/12 15:28:29 by zouaraqa         ###   ########.fr       */
+/*   Created: 2023/02/13 12:54:45 by zouaraqa          #+#    #+#             */
+/*   Updated: 2023/02/19 10:46:24 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include "get_next_line.h"
 
 # define PERM_D 126
 # define COM_N 127
@@ -26,8 +27,14 @@
 
 typedef struct s_vars{
 	char	**args;
+	char	*str;
 	char	*s;
+	int		fd;
+	int		p1[2];
+	int		p2[2];
+	int		pid;
 	int		i;
+	int		j;
 	int		y;
 	int		x;
 	int		count;
@@ -35,8 +42,15 @@ typedef struct s_vars{
 }t_vars;
 
 //test ms7 dakchi
-void	print(char *str);
 void	ft_putnbr_fd(int n, int fd);
+
+void	set_first_pipes(t_vars *va);
+void	set_pipes(t_vars *va, int i);
+void	set_pipes_parent(t_vars *va, int i);
+void	open_pipes(t_vars *va, int i);
+void	the_parent(char **av, char **env, t_vars va, int ac);
+void	middle_childs(char **av, char **env, t_vars va, int i);
+void	first_child(char **av, char **env, t_vars va);
 
 // utils
 size_t	ft_strlen(const char *s);
@@ -47,6 +61,7 @@ void	ft_putstr_fd(char *s, int fd);
 void	*ft_calloc(size_t count, size_t size);
 int		ft_strstr(char *haystack, char *needle);
 char	*cpy(char *dst, char *src, int len);
+int		ft_strcmp(char *s1, char *s2, char c);
 
 // exit func
 void	ft_free(char **str, int i);

@@ -5,72 +5,85 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/21 08:59:06 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/13 10:08:16 by zouaraqa         ###   ########.fr       */
+/*   Created: 2023/02/02 09:59:01 by zouaraqa          #+#    #+#             */
+/*   Updated: 2023/02/19 14:45:18 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	child(char **av, char **env, int pfd[], t_vars *va)
+void	heredoc_func(char **av, t_vars va)
 {
-	char	**cmd;
-	char	*path;
-	int		fd;
+	char	*str;
+	char	*line;
 
-	path = NULL;
-	close(pfd[0]);
-	dup2(pfd[1], 1);
-	fd = open(av[1], O_RDONLY);
-	if (fd == -1)
-		free_exit_msg(ft_strjoin(av[1], ": No such file or directory"), \
-			1, NULL);
-	dup2(fd, 0);
-	cmd = split_it(av[2], va);
-	if (!cmd[0])
-		free_exit_msg(ft_strjoin(av[2], ": command not found"), COM_N, cmd);
-	path = get_path(env);
-	which_cmd(env, path, cmd);
+	line = NULL;
+	close(va.p1[0]);
+	while (1)
+	{
+		write(2, "heredoc> ", 9);
+		str = get_next_line(0);
+		if (ft_strcmp(str, av[2], '\n'))
+			line = ft_strjoin(line, str);
+		if (!ft_strcmp(str, av[2], '\n'))
+		{
+			write (va.p1[1], line, ft_strlen(line));
+			free(str);
+			free(line);
+			break ;
+		}
+		free(str);
+	}
 }
 
-static void	parent(char **av, char **env, int pfd[], t_vars *va)
+void	which_child(char **av, char **env, int ac, t_vars va)
 {
-	char	**cmd;
-	char	*path;
-	int		fd;
+	if (ac >= 6 && !ft_strcmp(av[1], "here_doc", 0))
+		heredoc_func(av, va);
+	else if (ac >= 5)
+		first_child(av, env, va);
+}
 
-	path = NULL;
-	close(pfd[1]);
-	dup2(pfd[0], 0);
-	fd = open(av[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd == -1)
-		free_exit_msg(ft_strjoin(av[4], ": permission denied"), 1, NULL);
-	dup2(fd, 1);
-	cmd = split_it(av[3], va);
-	if (!cmd[0])
-		free_exit_msg(ft_strjoin(av[3], ": command not found"), COM_N, cmd);
-	path = get_path(env);
-	which_cmd(env, path, cmd);
+void	parent_and_childs(char **av, char **env, int ac, t_vars va)
+{
+	va.i = 1;
+	va.j = -1;
+	while (va.i <= ac - 4)
+	{
+		if (va.i == ac - 4)
+		{
+			while (++va.j < ac - 5)
+				wait(NULL);
+			the_parent(av, env, va, ac);
+		}
+		va.pid = fork();
+		if (va.pid == 0)
+			middle_childs(av, env, va, va.i);
+		open_pipes(&va, va.i);
+		va.i++;
+	}
 }
 
 int	main(int ac, char **av, char **env)
 {
 	t_vars	va;
-	int		pfd[2];
-	int		pid;
 
-	if (ac != 5)
-		exit_msg("wrong args", 2);
-	if (pipe(pfd) == -1)
-		exit_msg("error in pipe", 2);
-	pid = fork();
-	if (pid == -1)
-		exit_msg("error in fork", 2);
-	if (pid == 0)
-		child(av, env, pfd, &va);
+	if (ac < 5)
+	{
+		ft_putstr_fd("write as follow :\n", 2);
+		ft_putstr_fd("-> ./pipex file1 cmd1 cmd2 cmd3 ... cmdn file2\n", 2);
+		exit_msg("-> ./pipex here_doc LIMITER cmd cmd1 file\n", 2);
+	}
+	set_first_pipes(&va);
+	va.pid = fork();
+	if (va.pid == -1)
+		exit_msg("fork error\n", 2);
+	if (va.pid == 0)
+		which_child(av, env, ac, va);
 	else
 	{
-		parent(av, env, pfd, &va);
 		wait(NULL);
+		parent_and_childs(av, env, ac, va);
 	}
+	return (0);
 }

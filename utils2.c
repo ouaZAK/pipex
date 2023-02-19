@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 10:36:50 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/12 15:53:22 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/19 14:49:17 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,13 @@ char	*ft_strjoin_2(char *s1, char *s2)
 		s1 = NULL;
 		return (0);
 	}
-	i = -1;
+	i = 0;
 	j = 0;
-	while (s1 && s1[++i])
+	while (s1 && s1[i])
+	{
 		str[i] = s1[i];
+		i++;
+	}
 	str[i++] = '/';
 	while (s2 && s2[j])
 		str[i++] = s2[j++];
