@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:54:45 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/19 10:46:24 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/20 09:21:06 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define NF_ND 127
 
 typedef struct s_vars{
-	char	**args;
+	char	**cmd;
 	char	*str;
 	char	*s;
 	int		fd;
@@ -51,6 +51,7 @@ void	open_pipes(t_vars *va, int i);
 void	the_parent(char **av, char **env, t_vars va, int ac);
 void	middle_childs(char **av, char **env, t_vars va, int i);
 void	first_child(char **av, char **env, t_vars va);
+void	fd_permition(char *av);
 
 // utils
 size_t	ft_strlen(const char *s);
@@ -72,6 +73,5 @@ void	exit_msg(char *str, int nb);
 char	*get_path(char **env);
 char	*join_path_to_cmd(char *path, char *cmd);
 void	which_cmd(char **env, char *path, char **cmd);
-void	check_print_errors(char *path, char *cmd, char c, char **cmds);
-char	**split_it(char *str, t_vars *va);
+char	**split_it(char *str, t_vars va);
 #endif

@@ -6,13 +6,26 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 10:59:39 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/19 10:55:48 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/20 09:54:43 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	check_sub_dir(char *str)
+void	fd_permition(char *av)
+{
+	if (!access(av, F_OK))
+	{
+		if (access(av, R_OK))
+			free_exit_msg(ft_strjoin(av, ": permission denied"), \
+			1, NULL);
+	}
+	else
+		free_exit_msg(ft_strjoin(av, ": No such file or directory"), \
+			1, NULL);
+}
+
+static int	check_sub_dir(char *str)
 {
 	int	i;
 
@@ -24,7 +37,7 @@ int	check_sub_dir(char *str)
 	return (0);
 }
 
-char	*add_point(char *str)
+static char	*add_point(char *str)
 {
 	char	*cmd;
 	int		i;
@@ -41,7 +54,7 @@ char	*add_point(char *str)
 	return (cmd);
 }
 
-void	check_print_errors(char *path, char *cmd, char c, char **cmds)
+static void	check_print_errors(char *path, char *cmd, char c, char **cmds)
 {
 	if (access(path, F_OK) && c == 'c')
 		free_exit_msg(ft_strjoin(cmd, ": command not found"), \
@@ -62,13 +75,13 @@ void	which_cmd(char **env, char *path, char **cmd)
 	{
 		check_print_errors(cmd[0], cmd[0], 'p', cmd);
 		execve(cmd[0], cmd, env);
-		free_exit_msg(ft_strjoin(cmd[0], "permission denied: "), \
+		free_exit_msg(ft_strjoin(cmd[0], ": permission denied: "), \
 			PERM_D, cmd);
 	}
 	else
 	{
 		path = join_path_to_cmd(path, cmd[0]);
-		if (ft_strstr(cmd[0], "/") && cmd[0][0] != '/')
+		if (cmd[0][0] != '/' && ft_strstr(cmd[0], "/"))
 			check_print_errors(path, cmd[0], 'p', cmd);
 		else
 			check_print_errors(path, cmd[0], 'c', cmd);

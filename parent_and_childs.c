@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 10:39:35 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/19 10:46:44 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/20 09:58:30 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,9 @@ void	first_child(char **av, char **env, t_vars va)
 	close(va.p1[0]);
 	dup2(va.p1[1], 1);
 	va.fd = open(av[1], O_RDONLY);
-	if (va.fd == -1)
-		free_exit_msg(ft_strjoin(av[1], ": No such file or directory"), \
-			1, NULL);
+	fd_permition(av[1]);
 	dup2(va.fd, 0);
-	cmd = split_it(av[2], &va);
+	cmd = split_it(av[2], va);
 	if (!cmd[0])
 		free_exit_msg(ft_strjoin(av[2], ": command not found"), COM_N, cmd);
 	path = get_path(env);
@@ -39,7 +37,7 @@ void	middle_childs(char **av, char **env, t_vars va, int i)
 
 	set_pipes(&va, va.i);
 	path = NULL;
-	cmd = split_it(av[i + 2], &va);
+	cmd = split_it(av[i + 2], va);
 	if (!cmd[0])
 		free_exit_msg(ft_strjoin(av[i + 2], \
 			": command not found"), COM_N, cmd);
@@ -80,7 +78,7 @@ void	the_parent(char **av, char **env, t_vars va, int ac)
 	set_pipes_parent(&va, va.i);
 	check_last_file(av, ac, &va);
 	dup2(va.fd, 1);
-	cmd = split_it(av[ac - 2], &va);
+	cmd = split_it(av[ac - 2], va);
 	if (!cmd[0])
 		free_exit_msg(ft_strjoin(av[ac - 2], \
 			": command not found"), COM_N, cmd);

@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 09:11:16 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/12 16:05:41 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/20 09:33:22 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ char	*get_path(char **env)
 		x = 0;
 		while (env[y][x] && env[y][x] == path[x])
 				x++;
-		if (!path[x])
+		if (!path[x] && env[y][x])
 			return (&env[y][x]);
 	}
-	return (NULL);
+	return ("/usr/local/bin:/usr/bin:/bin: \
+					/usr/sbin:/sbin:/usr/local/munki");
 }
 
 char	*join_path_to_cmd(char *path, char *cmd)
@@ -40,7 +41,6 @@ char	*join_path_to_cmd(char *path, char *cmd)
 	char	*tmp;
 	int		y;
 
-	y = 0;
 	str = ft_split(path, ':');
 	y = -1;
 	while (str[++y])
@@ -54,5 +54,5 @@ char	*join_path_to_cmd(char *path, char *cmd)
 		free(tmp);
 	}
 	free(str);
-	return (NULL);
+	return ("no");
 }

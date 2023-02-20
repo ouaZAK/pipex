@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 10:53:03 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/19 10:44:25 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/20 09:21:21 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	initializing(t_vars *va)
 {
-	va->args = NULL;
+	va->cmd = NULL;
 	va->s = NULL;
 	va->i = 0;
 	va->x = 0;
@@ -86,31 +86,31 @@ static void	skip_word(t_vars *va, char *str, char which)
 	}
 }
 
-char	**split_it(char *str, t_vars *va)
+char	**split_it(char *str, t_vars va)
 {
-	initializing(va);
-	va->args = ft_calloc(sizeof(char *), (word_count(str, va->i, \
-					va->x, va->split_with) + 1));
-	while (str[va->i])
+	initializing(&va);
+	va.cmd = ft_calloc(sizeof(char *), (word_count(str, va.i, \
+					va.x, va.split_with) + 1));
+	while (str[va.i])
 	{
-		va->count = 0;
-		va->x = va->i;
-		if (str[va->i] == '\'' || str[va->i] == '"')
+		va.count = 0;
+		va.x = va.i;
+		if (str[va.i] == '\'' || str[va.i] == '"')
 		{
-			va->split_with = str[va->i];
-			va->args[va->y++] = quote_split(&str[va->i + 1], va->split_with);
-			skip_word(va, str, 'q');
+			va.split_with = str[va.i];
+			va.cmd[va.y++] = quote_split(&str[va.i + 1], va.split_with);
+			skip_word(&va, str, 'q');
 		}
-		else if (str[va->i] != ' ')
+		else if (str[va.i] != ' ')
 		{
-			skip_word(va, str, ' ');
-			va->args[va->y] = ft_calloc(sizeof(char), va->count + 1);
-			va->args[va->y] = cpy(va->args[va->y], &str[va->i], va->count);
-			va->y++;
-			va->i = va->x;
+			skip_word(&va, str, ' ');
+			va.cmd[va.y] = ft_calloc(sizeof(char), va.count + 1);
+			va.cmd[va.y] = cpy(va.cmd[va.y], &str[va.i], va.count);
+			va.y++;
+			va.i = va.x;
 		}
-		while (str[va->i] && str[va->i] == ' ')
-			va->i++;
+		while (str[va.i] && str[va.i] == ' ')
+			va.i++;
 	}
-	return (va->args);
+	return (va.cmd);
 }
