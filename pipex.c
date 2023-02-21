@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 09:59:01 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/20 11:47:50 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/21 11:25:27 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,14 @@ void	parent_and_childs(char **av, char **env, int ac, t_vars va)
 	while (va.i <= ac - 4)
 	{
 		if (va.i == ac - 4)
-		{
-			while (++va.j < ac - 5)
-				wait(NULL);
 			the_parent(av, env, va, ac);
-		}
 		va.pid = fork();
+		if (va.pid == -1)
+			exit_msg("pipex :", 2, NULL);
 		if (va.pid == 0)
 			middle_childs(av, env, va, va.i);
 		open_pipes(&va, va.i);
+		wait(NULL);
 		va.i++;
 	}
 }
@@ -72,12 +71,13 @@ int	main(int ac, char **av, char **env)
 	{
 		ft_putstr_fd("write as follow :\n", 2);
 		ft_putstr_fd("-> ./pipex file1 cmd1 cmd2 cmd3 ... cmdn file2\n", 2);
-		exit_msg("-> ./pipex here_doc LIMITER cmd cmd1 file\n", 2);
+		ft_putstr_fd("-> ./pipex here_doc LIMITER cmd cmd1 file\n", 2);
+		exit(2);
 	}
 	set_first_pipes(&va);
 	va.pid = fork();
 	if (va.pid == -1)
-		exit_msg("fork error\n", 2);
+		exit_msg("pipex: ", 2, NULL);
 	if (va.pid == 0)
 		which_child(av, env, ac, va);
 	else

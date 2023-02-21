@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 10:39:35 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/20 09:58:30 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/21 11:19:55 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	first_child(char **av, char **env, t_vars va)
 	close(va.p1[0]);
 	dup2(va.p1[1], 1);
 	va.fd = open(av[1], O_RDONLY);
-	fd_permition(av[1]);
+	if (va.fd == -1)
+		exit_msg(ft_strjoin("pipex: ", av[1]), 1, NULL);
 	dup2(va.fd, 0);
 	cmd = split_it(av[2], va);
 	if (!cmd[0])
@@ -50,22 +51,14 @@ static void	check_last_file(char **av, int ac, t_vars *va)
 	if (!ft_strcmp(av[1], "here_doc", 0))
 	{
 		va->fd = open(av[ac - 1], O_CREAT | O_WRONLY | O_APPEND, 0644);
-		if (va->fd == -1 && *av[ac - 1])
-			free_exit_msg(ft_strjoin(av[ac - 1], \
-				": permission denied"), 1, NULL);
-		else if (!*av[ac - 1])
-			free_exit_msg(ft_strjoin(av[ac - 1], \
-				": No such file or directory"), NF_ND, NULL);
+		if (va->fd == -1 )
+			exit_msg(ft_strjoin("pipex: ", av[ac - 1]), 1, NULL);
 	}
 	else
 	{
 		va->fd = open(av[ac - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		if (va->fd == -1 && *av[ac - 1])
-			free_exit_msg(ft_strjoin(av[ac - 1], \
-				": permission denied"), 1, NULL);
-		else if (!*av[ac - 1])
-			free_exit_msg(ft_strjoin(av[ac - 1], \
-				": No such file or directory"), NF_ND, NULL);
+		if (va->fd == -1)
+			exit_msg(ft_strjoin("pipex: ", av[ac - 1]), 1, NULL);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:54:45 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/20 09:21:06 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/21 11:23:37 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	open_pipes(t_vars *va, int i);
 void	the_parent(char **av, char **env, t_vars va, int ac);
 void	middle_childs(char **av, char **env, t_vars va, int i);
 void	first_child(char **av, char **env, t_vars va);
-void	fd_permition(char *av);
 
 // utils
 size_t	ft_strlen(const char *s);
@@ -67,7 +66,7 @@ int		ft_strcmp(char *s1, char *s2, char c);
 // exit func
 void	ft_free(char **str, int i);
 void	free_exit_msg(char *str, int nb, char **s);
-void	exit_msg(char *str, int nb);
+void	exit_msg(char *str, int nb, char **cmd);
 
 //func
 char	*get_path(char **env);

@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:29:04 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/19 10:33:35 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/21 11:01:59 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	set_first_pipes(t_vars *va)
 {
 	if (pipe(va->p1) == -1)
-		exit_msg("pipe error\n", 2);
+		exit_msg("pipe error\n", 2, NULL);
 	if (pipe(va->p2) == -1)
-		exit_msg("pipe error\n", 2);
+		exit_msg("pipe error\n", 2, NULL);
 }
 
 void	set_pipes(t_vars *va, int i)

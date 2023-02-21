@@ -6,24 +6,11 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 10:59:39 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/20 09:54:43 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/02/21 11:13:50 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	fd_permition(char *av)
-{
-	if (!access(av, F_OK))
-	{
-		if (access(av, R_OK))
-			free_exit_msg(ft_strjoin(av, ": permission denied"), \
-			1, NULL);
-	}
-	else
-		free_exit_msg(ft_strjoin(av, ": No such file or directory"), \
-			1, NULL);
-}
 
 static int	check_sub_dir(char *str)
 {
@@ -75,8 +62,7 @@ void	which_cmd(char **env, char *path, char **cmd)
 	{
 		check_print_errors(cmd[0], cmd[0], 'p', cmd);
 		execve(cmd[0], cmd, env);
-		free_exit_msg(ft_strjoin(cmd[0], ": permission denied: "), \
-			PERM_D, cmd);
+		exit_msg(ft_strjoin("pipex: ", cmd[0]), 1, cmd);
 	}
 	else
 	{
@@ -86,5 +72,6 @@ void	which_cmd(char **env, char *path, char **cmd)
 		else
 			check_print_errors(path, cmd[0], 'c', cmd);
 		execve(path, cmd, env);
+		exit_msg(ft_strjoin("pipex: ", cmd[0]), 1, cmd);
 	}
 }
