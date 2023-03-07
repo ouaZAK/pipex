@@ -19,12 +19,12 @@ OBJ = $(SRC:.c=.o)
 
 
 %.o : %.c
-	@$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	@$(CC) $(FLAGS) $^ -o $@
+	$(CC) $(FLAGS) $^ -o $@
 
 bonus : all
 

@@ -6,7 +6,7 @@
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 10:59:39 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/21 11:13:50 by zouaraqa         ###   ########.fr       */
+/*   Updated: 2023/03/07 10:27:19 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	which_cmd(char **env, char *path, char **cmd)
 	{
 		path = join_path_to_cmd(path, cmd[0]);
 		if (cmd[0][0] != '/' && ft_strstr(cmd[0], "/"))
+			check_print_errors(path, cmd[0], 'p', cmd);
+		else if (!ft_strcmp(path, "emptypath", '0'))
 			check_print_errors(path, cmd[0], 'p', cmd);
 		else
 			check_print_errors(path, cmd[0], 'c', cmd);
