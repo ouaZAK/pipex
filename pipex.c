@@ -12,55 +12,45 @@
 
 #include "pipex.h"
 
-void	heredoc_func(char **av, t_vars va)
+static void	parent(t_vars va)
 {
-	char	*str;
-	char	*line;
-
-	line = NULL;
-	close(va.p1[0]);
-	while (1)
+	close_fds(&va);
+	while (va.i-- > 0)
 	{
-		write(2, "heredoc> ", 9);
-		str = get_next_line(0);
-		if (ft_strcmp(str, av[2], '\n'))
-			line = ft_strjoin(line, str);
-		if (!ft_strcmp(str, av[2], '\n'))
-		{
-			write (va.p1[1], line, ft_strlen(line));
-			free(str);
-			free(line);
-			break ;
-		}
-		free(str);
+		va.wpid = waitpid(va.pid[va.i], &va.status, 0);
+		if (va.wpid == va.pid[va.loop])
+			if ((va.i == va.loop) && WIFEXITED(va.status))
+				va.exit = WEXITSTATUS(va.status);
 	}
+	free(va.pid);
+	if (va.split_with == 'h')
+		unlink("tmp");
+	exit(va.exit);
 }
 
-void	which_child(char **av, char **env, int ac, t_vars va)
+static void	parent_and_childs(char **av, char **env, int ac, t_vars va)
 {
-	if (ac >= 6 && !ft_strcmp(av[1], "here_doc", 0))
-		heredoc_func(av, va);
-	else if (ac >= 5)
-		first_child(av, env, va);
-}
-
-void	parent_and_childs(char **av, char **env, int ac, t_vars va)
-{
-	va.i = 1;
-	va.j = -1;
-	while (va.i <= ac - 4)
+	va.i = 0;
+	while (va.i <= va.loop)
 	{
-		if (va.i == ac - 4)
-			the_parent(av, env, va, ac);
-		va.pid = fork();
-		if (va.pid == -1)
+		va.path = get_path(env);
+		va.cmd = which_split(av, va, ac, va.i);
+		check_empty_cmd(av, va);
+		check_errors(va.path, va.cmd, &va);
+		va.pid[va.i] = fork();
+		if (va.pid[va.i] == -1)
 			exit_msg("pipex :", 2, NULL);
-		if (va.pid == 0)
-			middle_childs(av, env, va, va.i);
+		if (va.pid[va.i] == 0 && va.i == 0)
+			first_child(env, va);
+		else if (va.pid[va.i] == 0 && va.i != va.loop && va.i != 0)
+			middle_childs(env, va);
+		else if (va.pid[va.i] == 0 && va.i == va.loop)
+			last_child(av, env, va, ac);
 		open_pipes(&va, va.i);
-		wait(NULL);
+		ft_free(va.cmd, 0);
 		va.i++;
 	}
+	parent(va);
 }
 
 int	main(int ac, char **av, char **env)
@@ -74,16 +64,8 @@ int	main(int ac, char **av, char **env)
 		ft_putstr_fd("-> ./pipex here_doc LIMITER cmd cmd1 file\n", 2);
 		exit(2);
 	}
+	open_file_or_herdoc(av, ac, &va);
 	set_first_pipes(&va);
-	va.pid = fork();
-	if (va.pid == -1)
-		exit_msg("pipex: ", 2, NULL);
-	if (va.pid == 0)
-		which_child(av, env, ac, va);
-	else
-	{
-		wait(NULL);
-		parent_and_childs(av, env, ac, va);
-	}
+	parent_and_childs(av, env, ac, va);
 	return (0);
 }

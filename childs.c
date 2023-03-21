@@ -12,38 +12,33 @@
 
 #include"pipex.h"
 
-void	first_child(char **av, char **env, t_vars va)
+void	executing_cmd(char **env, t_vars va)
 {
-	char	**cmd;
-	char	*path;
-
-	path = NULL;
-	close(va.p1[0]);
-	dup2(va.p1[1], 1);
-	va.fd = open(av[1], O_RDONLY);
-	if (va.fd == -1)
-		exit_msg(ft_strjoin("pipex: ", av[1]), 1, NULL);
-	dup2(va.fd, 0);
-	cmd = split_it(av[2], va);
-	if (!cmd[0])
-		free_exit_msg(ft_strjoin(av[2], ": command not found"), COM_N, cmd);
-	path = get_path(env);
-	which_cmd(env, path, cmd);
+	if (va.cmd[0][0] != '/' && va.cmd[0][0] != '.' && check_sub_dir(va.cmd[0]))
+		va.cmd[0] = add_point(va.cmd[0]);
+	if (va.cmd[0][0] == '/' || va.cmd[0][0] == '.')
+		execve(va.cmd[0], va.cmd, env);
+	else
+	{
+		va.path = join_path_to_cmd(va.path, va.cmd[0]);
+		execve(va.path, va.cmd, env);
+	}
 }
 
-void	middle_childs(char **av, char **env, t_vars va, int i)
+void	first_child(char **env, t_vars va)
 {
-	char	**cmd;
-	char	*path;
+	close(va.p1[0]);
+	dup2(va.p1[1], 1);
+	dup2(va.fd, 0);
+	executing_cmd(env, va);
+	exit(va.exit);
+}
 
+void	middle_childs(char **env, t_vars va)
+{
 	set_pipes(&va, va.i);
-	path = NULL;
-	cmd = split_it(av[i + 2], va);
-	if (!cmd[0])
-		free_exit_msg(ft_strjoin(av[i + 2], \
-			": command not found"), COM_N, cmd);
-	path = get_path(env);
-	which_cmd(env, path, cmd);
+	executing_cmd(env, va);
+	exit(va.exit);
 }
 
 static void	check_last_file(char **av, int ac, t_vars *va)
@@ -62,19 +57,11 @@ static void	check_last_file(char **av, int ac, t_vars *va)
 	}
 }
 
-void	the_parent(char **av, char **env, t_vars va, int ac)
+void	last_child(char **av, char **env, t_vars va, int ac)
 {
-	char	**cmd;
-	char	*path;
-
-	path = NULL;
 	set_pipes_parent(&va, va.i);
 	check_last_file(av, ac, &va);
 	dup2(va.fd, 1);
-	cmd = split_it(av[ac - 2], va);
-	if (!cmd[0])
-		free_exit_msg(ft_strjoin(av[ac - 2], \
-			": command not found"), COM_N, cmd);
-	path = get_path(env);
-	which_cmd(env, path, cmd);
+	executing_cmd(env, va);
+	exit(va.exit);
 }

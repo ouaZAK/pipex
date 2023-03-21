@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-static int	check_sub_dir(char *str)
+int	check_sub_dir(char *str)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ static int	check_sub_dir(char *str)
 	return (0);
 }
 
-static char	*add_point(char *str)
+char	*add_point(char *str)
 {
 	char	*cmd;
 	int		i;
@@ -41,39 +41,35 @@ static char	*add_point(char *str)
 	return (cmd);
 }
 
-static void	check_print_errors(char *path, char *cmd, char c, char **cmds)
+static void	check_print_errors(char *path, char *cmd, char c, t_vars *va)
 {
 	if (access(path, F_OK) && c == 'c')
 		free_exit_msg(ft_strjoin(cmd, ": command not found"), \
-			COM_N, cmds);
+			COM_N, va);
 	else if (access(path, F_OK) && c == 'p')
 		free_exit_msg(ft_strjoin(cmd, ": No such file or directory"), \
-			NF_ND, cmds);
+			NF_ND, va);
 	else if (access(path, X_OK))
 		free_exit_msg(ft_strjoin(cmd, ": permission denied: "), \
-			PERM_D, cmds);
+			PERM_D, va);
 }
 
-void	which_cmd(char **env, char *path, char **cmd)
+void	check_errors(char *path, char **cmd, t_vars *va)
 {
+	if (!*cmd)
+		return ;
 	if (cmd[0][0] != '/' && cmd[0][0] != '.' && check_sub_dir(cmd[0]))
 		cmd[0] = add_point(cmd[0]);
 	if (cmd[0][0] == '/' || cmd[0][0] == '.')
-	{
-		check_print_errors(cmd[0], cmd[0], 'p', cmd);
-		execve(cmd[0], cmd, env);
-		exit_msg(ft_strjoin("pipex: ", cmd[0]), 1, cmd);
-	}
+		check_print_errors(cmd[0], cmd[0], 'p', va);
 	else
 	{
 		path = join_path_to_cmd(path, cmd[0]);
 		if (cmd[0][0] != '/' && ft_strstr(cmd[0], "/"))
-			check_print_errors(path, cmd[0], 'p', cmd);
+			check_print_errors(path, cmd[0], 'p', va);
 		else if (!ft_strcmp(path, "emptypath", '0'))
-			check_print_errors(path, cmd[0], 'p', cmd);
+			check_print_errors(path, cmd[0], 'p', va);
 		else
-			check_print_errors(path, cmd[0], 'c', cmd);
-		execve(path, cmd, env);
-		exit_msg(ft_strjoin("pipex: ", cmd[0]), 1, cmd);
+			check_print_errors(path, cmd[0], 'c', va);
 	}
 }

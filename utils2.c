@@ -70,12 +70,13 @@ void	exit_msg(char *str, int nb, char **cmd)
 	exit(nb);
 }
 
-void	free_exit_msg(char *str, int nb, char **s)
+void	free_exit_msg(char *str, int nb, t_vars *va)
 {
 	ft_putstr_fd("pipex: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("\n", 2);
 	free(str);
-	ft_free(s, 0);
-	exit(nb);
+	va->exit = nb;
+	// ft_free(s, 0);
+	// exit(nb);
 }
