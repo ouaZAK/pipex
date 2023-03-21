@@ -14,8 +14,8 @@ SRC =	pipex.c \
 		putstr_fd.c \
 		set_pipes.c \
 		check_errors.c \
-		get_next_line_bonus.c \
-		get_next_line_utils_bonus.c
+		get_next_line.c \
+		get_next_line_utils.c
 
 OBJ = $(SRC:.c=.o)
 
