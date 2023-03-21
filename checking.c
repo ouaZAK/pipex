@@ -3,6 +3,7 @@
 
 char	**which_split(char **av, t_vars va, int ac, int i)
 {
+	va.cmd = NULL;
 	if ((i == 0) || (i != va.loop && i != 0))
 	{
 		if (va.split_with == 'h')
@@ -18,15 +19,15 @@ char	**which_split(char **av, t_vars va, int ac, int i)
 void	check_empty_cmd(char **av, t_vars va)
 {
 	if (va.split_with == 'h')
-		{
-			if (!va.cmd[0])
-				free_exit_msg(ft_strjoin(av[va.i + 3], \
-					": command not found"), COM_N, &va);
-		}
-		else
-		{
-			if (!va.cmd[0])
-				free_exit_msg(ft_strjoin(av[va.i + 2], \
-					": command not found"), COM_N, &va);
-		}
+	{
+		if (!va.cmd[0])
+			free_exit_msg(ft_strjoin(av[va.i + 3], \
+				": command not found"), COM_N, &va);
+	}
+	else
+	{
+		if (!va.cmd[0])
+			free_exit_msg(ft_strjoin(av[va.i + 2], \
+				": command not found"), COM_N, &va);
+	}
 }

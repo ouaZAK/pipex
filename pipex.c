@@ -31,25 +31,29 @@ static void	parent(t_vars va)
 static void	parent_and_childs(char **av, char **env, int ac, t_vars va)
 {
 	va.i = 0;
+	va.path = get_path(env);
 	while (va.i <= va.loop)
 	{
-		va.path = get_path(env);
 		va.cmd = which_split(av, va, ac, va.i);
 		check_empty_cmd(av, va);
-		check_errors(va.path, va.cmd, &va);
-		va.pid[va.i] = fork();
-		if (va.pid[va.i] == -1)
-			exit_msg("pipex :", 2, NULL);
-		if (va.pid[va.i] == 0 && va.i == 0)
-			first_child(env, va);
-		else if (va.pid[va.i] == 0 && va.i != va.loop && va.i != 0)
-			middle_childs(env, va);
-		else if (va.pid[va.i] == 0 && va.i == va.loop)
-			last_child(av, env, va, ac);
+		if (*va.cmd)
+		{
+			check_errors(va.path, va.cmd, &va);
+			va.pid[va.i] = fork();
+			if (va.pid[va.i] == -1)
+				exit_msg("pipex :", 2, NULL);
+			if (va.pid[va.i] == 0 && va.i == 0)
+				first_child(env, va);
+			else if (va.pid[va.i] == 0 && va.i != va.loop && va.i != 0)
+				middle_childs(env, va);
+			else if (va.pid[va.i] == 0 && va.i == va.loop)
+				last_child(av, env, va, ac);
+		}
 		open_pipes(&va, va.i);
 		ft_free(va.cmd, 0);
 		va.i++;
 	}
+	free(va.cmd);
 	parent(va);
 }
 

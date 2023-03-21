@@ -55,7 +55,7 @@ char	*ft_strjoin_2(char *s1, char *s2)
 
 void	ft_free(char **str, int i)
 {
-	if (!str)
+	if (!str || !*str)
 		return ;
 	while (str[i])
 		free(str[i++]);
@@ -77,6 +77,4 @@ void	free_exit_msg(char *str, int nb, t_vars *va)
 	ft_putstr_fd("\n", 2);
 	free(str);
 	va->exit = nb;
-	// ft_free(s, 0);
-	// exit(nb);
 }

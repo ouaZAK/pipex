@@ -27,21 +27,21 @@
 
 typedef struct s_vars{
 	pid_t	wpid;
-	int		status;
 	char	**cmd;
 	char	*str;
 	char	*s;
 	char	*path;
+	int		*pid;
 	int		fd;
 	int		p1[2];
 	int		p2[2];
-	int		*pid;
 	int		i;
 	int		y;
 	int		x;
 	int		exit;
 	int		loop;
 	int		count;
+	int		status;
 	char	split_with;
 }t_vars;
 

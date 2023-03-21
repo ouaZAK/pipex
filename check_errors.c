@@ -56,8 +56,6 @@ static void	check_print_errors(char *path, char *cmd, char c, t_vars *va)
 
 void	check_errors(char *path, char **cmd, t_vars *va)
 {
-	if (!*cmd)
-		return ;
 	if (cmd[0][0] != '/' && cmd[0][0] != '.' && check_sub_dir(cmd[0]))
 		cmd[0] = add_point(cmd[0]);
 	if (cmd[0][0] == '/' || cmd[0][0] == '.')
@@ -72,4 +70,5 @@ void	check_errors(char *path, char **cmd, t_vars *va)
 		else
 			check_print_errors(path, cmd[0], 'c', va);
 	}
+	free(path);
 }
