@@ -28,6 +28,12 @@ void	heredoc_func(char **av, t_vars *va)
 	close(tmp);
 }
 
+static void	print_msg_error(char *str)
+{
+	perror(str);
+	free(str);
+}
+
 void	open_file_or_herdoc(char **av, int ac, t_vars *va)
 {
 	if (ac >= 6 && !ft_strcmp(av[1], "here_doc", '0') && ft_strlen(av[1]) == 8)
@@ -36,13 +42,13 @@ void	open_file_or_herdoc(char **av, int ac, t_vars *va)
 		heredoc_func(av, va);
 		va->fd = open("tmp", O_RDONLY);
 		if (va->fd == -1)
-			exit_msg(ft_strjoin("pipex: ", av[1]), 1, NULL);
+			print_msg_error(ft_strjoin("pipex: ", av[1]));
 	}
 	else
 	{
 		va->loop = ac - 4;
 		va->fd = open(av[1], O_RDONLY);
 		if (va->fd == -1)
-			exit_msg(ft_strjoin("pipex: ", av[1]), 1, NULL);
+			print_msg_error(ft_strjoin("pipex: ", av[1]));
 	}
 }
