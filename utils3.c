@@ -90,3 +90,23 @@ int	ft_strcmp(char *s1, char *s2, char c)
 			return (0);
 	return (s1[i] - s2[i]);
 }
+
+char	*ft_strdup(char *str)
+{
+	char	*cpy;
+	int		len;
+	int		i;
+
+	len = ft_strlen(str);
+	cpy = malloc(sizeof(char) * (len + 1));
+	if (!cpy)
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		cpy[i] = str[i];
+		i++;
+	}
+	cpy[i] = '\0';
+	return (cpy);
+}

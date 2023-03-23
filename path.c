@@ -41,7 +41,7 @@ char	*join_path_to_cmd(char *path, char *cmd)
 	int		y;
 
 	if (!ft_strcmp(path, "emptypath", '0'))
-		return ("emptypath");
+		return (ft_strdup("emptypath"));
 	str = ft_split(path, ':');
 	y = -1;
 	while (str[++y])
@@ -55,5 +55,5 @@ char	*join_path_to_cmd(char *path, char *cmd)
 		free(tmp);
 	}
 	free(str);
-	return ("wrongpath");
+	return (ft_strdup("wrongpath"));
 }

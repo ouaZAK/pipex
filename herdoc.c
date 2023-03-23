@@ -28,10 +28,11 @@ void	heredoc_func(char **av, t_vars *va)
 	close(tmp);
 }
 
-static void	print_msg_error(char *str)
+void	print_msg_error(char *str, t_vars *va)
 {
 	perror(str);
 	free(str);
+	close(va->fd);
 }
 
 void	open_file_or_herdoc(char **av, int ac, t_vars *va)
@@ -42,13 +43,13 @@ void	open_file_or_herdoc(char **av, int ac, t_vars *va)
 		heredoc_func(av, va);
 		va->fd = open("tmp", O_RDONLY);
 		if (va->fd == -1)
-			print_msg_error(ft_strjoin("pipex: ", av[1]));
+			print_msg_error(ft_strjoin("pipex: ", av[1]), va);
 	}
 	else
 	{
 		va->loop = ac - 4;
 		va->fd = open(av[1], O_RDONLY);
 		if (va->fd == -1)
-			print_msg_error(ft_strjoin("pipex: ", av[1]));
+			print_msg_error(ft_strjoin("pipex: ", av[1]), va);
 	}
 }

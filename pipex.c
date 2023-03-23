@@ -53,7 +53,6 @@ static void	parent_and_childs(char **av, char **env, int ac, t_vars va)
 		ft_free(va.cmd, 0);
 		va.i++;
 	}
-	// free(va.cmd);
 	parent(va);
 }
 

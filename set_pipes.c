@@ -77,9 +77,14 @@ void	open_pipes(t_vars *va, int i)
 
 void	close_fds(t_vars *va)
 {
-	close(va->fd);
-	close(va->p1[0]);
-	close(va->p1[1]);
-	close(va->p2[0]);
-	close(va->p2[1]);
+	if (va->fd != -1)
+		close(va->fd);
+	if (va->p1[0] != -1)
+		close(va->p1[0]);
+	if (va->p1[1] != -1)
+		close(va->p1[1]);
+	if (va->p2[0] != -1)
+		close(va->p2[0]);
+	if (va->p2[1] != -1)
+		close(va->p2[1]);
 }

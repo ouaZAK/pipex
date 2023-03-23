@@ -74,6 +74,8 @@ void	ft_putstr_fd(char *s, int fd);
 void	*ft_calloc(size_t count, size_t size);
 int		ft_strstr(char *haystack, char *needle);
 int		ft_strcmp(char *s1, char *s2, char c);
+char	*ft_strdup(char *str);
+void	print_msg_error(char *str, t_vars *va);
 
 // exit func
 void	ft_free(char **str, int i);

@@ -69,6 +69,6 @@ void	check_errors(char *path, char **cmd, t_vars *va)
 			check_print_errors(path, cmd[0], 'p', va);
 		else
 			check_print_errors(path, cmd[0], 'c', va);
+		free(path);
 	}
-	// free(path);
 }
