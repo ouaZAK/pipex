@@ -55,7 +55,7 @@ char	*ft_strjoin_2(char *s1, char *s2)
 
 void	ft_free(char **str, int i)
 {
-	if (!str || !*str)
+	if (!str)
 		return ;
 	while (str[i])
 		free(str[i++]);
