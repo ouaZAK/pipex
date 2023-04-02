@@ -16,18 +16,18 @@ char	**which_split(char **av, t_vars va, int ac, int i)
 	return (va.cmd);
 }
 
-void	check_empty_cmd(char **av, t_vars va)
+void	check_empty_cmd(char **av, t_vars *va)
 {
-	if (va.split_with == 'h')
+	if (va->split_with == 'h')
 	{
-		if (!va.cmd[0])
-			free_exit_msg(ft_strjoin(av[va.i + 3], \
-				": command not found"), COM_N, &va);
+		if (!va->cmd[0])
+			free_exit_msg(ft_strjoin(av[va->i + 3], \
+				": command not found"), COM_N, va);
 	}
 	else
 	{
-		if (!va.cmd[0])
-			free_exit_msg(ft_strjoin(av[va.i + 2], \
-				": command not found"), COM_N, &va);
+		if (!va->cmd[0])
+			free_exit_msg(ft_strjoin(av[va->i + 2], \
+				": command not found"), COM_N, va);
 	}
 }

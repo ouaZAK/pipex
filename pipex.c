@@ -35,7 +35,7 @@ static void	parent_and_childs(char **av, char **env, int ac, t_vars va)
 	while (va.i <= va.loop)
 	{
 		va.cmd = which_split(av, va, ac, va.i);
-		check_empty_cmd(av, va);
+		check_empty_cmd(av, &va);
 		if (*va.cmd)
 		{
 			check_errors(va.path, va.cmd, &va);

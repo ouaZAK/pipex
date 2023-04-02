@@ -61,7 +61,7 @@ void	close_fds(t_vars *va);
 void	heredoc_func(char **av, t_vars *va);
 void	open_file_or_herdoc(char **av, int ac, t_vars *va);
 char	**which_split(char **av, t_vars va, int ac, int i);
-void	check_empty_cmd(char **av, t_vars va);
+void	check_empty_cmd(char **av, t_vars *va);
 
 
 // utils
