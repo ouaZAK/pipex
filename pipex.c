@@ -18,8 +18,7 @@ static void	parent(t_vars va)
 	while (va.i--)
 	{
 		va.wpid = waitpid(va.pid[va.i], &va.status, 0);
-		if (va.wpid == va.pid[va.loop] && (va.i == va.loop) \
-				&& WIFEXITED(va.status))
+		if (va.wpid == va.pid[va.loop] && WIFEXITED(va.status))
 			va.exit = WEXITSTATUS(va.status);
 	}
 	free(va.pid);
