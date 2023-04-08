@@ -15,12 +15,12 @@
 static void	parent(t_vars va)
 {
 	close_fds(&va);
-	while (va.i-- > 0)
+	while (va.i--)
 	{
 		va.wpid = waitpid(va.pid[va.i], &va.status, 0);
-		if (va.wpid == va.pid[va.loop])
-			if ((va.i == va.loop) && WIFEXITED(va.status))
-				va.exit = WEXITSTATUS(va.status);
+		if (va.wpid == va.pid[va.loop] && (va.i == va.loop) \
+				&& WIFEXITED(va.status))
+			va.exit = WEXITSTATUS(va.status);
 	}
 	free(va.pid);
 	if (va.split_with == 'h')
