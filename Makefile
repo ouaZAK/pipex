@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/05/01 09:42:48 by zouaraqa          #+#    #+#              #
+#    Updated: 2023/05/03 13:27:44 by zouaraqa         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 CC = cc
 NAME = pipex
 FLAGS = -Wall -Wextra -Werror
@@ -11,14 +23,13 @@ SRC =	pipex.c \
 		herdoc.c \
 		split_it.c \
 		checking.c \
-		putstr_fd.c \
+		ft_putstr_fd.c \
 		set_pipes.c \
 		check_errors.c \
-		get_next_line.c \
-		get_next_line_utils.c
+		get_next_line_bonus.c \
+		get_next_line_utils_bonus.c
 
 OBJ = $(SRC:.c=.o)
-
 
 %.o : %.c
 	@$(CC) $(FLAGS) -c $< -o $@

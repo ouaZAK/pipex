@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/02 09:59:01 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/03/07 20:07:22 by zouaraqa         ###   ########.fr       */
+/*   Created: 2023/05/01 09:55:18 by zouaraqa          #+#    #+#             */
+/*   Updated: 2023/05/04 09:55:55 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	parent(t_vars va)
 	while (va.i--)
 	{
 		va.wpid = waitpid(va.pid[va.i], &va.status, 0);
-		if (va.wpid == va.pid[va.loop] && WIFEXITED(va.status))
-			va.exit = WEXITSTATUS(va.status);
+		if (va.wpid == va.pid[va.loop])
+			va.exit = (va.status >> 8) & 0x000000ff;
 	}
 	free(va.pid);
 	if (va.split_with == 'h')

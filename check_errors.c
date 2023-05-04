@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   which_cmd.c                                        :+:      :+:    :+:   */
+/*   check_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/23 10:59:39 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/03/07 10:27:19 by zouaraqa         ###   ########.fr       */
+/*   Created: 2023/05/01 09:43:52 by zouaraqa          #+#    #+#             */
+/*   Updated: 2023/05/04 09:58:06 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ char	*add_point(char *str)
 static void	check_print_errors(char *path, char *cmd, char c, t_vars *va)
 {
 	if (access(path, F_OK) && c == 'c')
-		free_exit_msg(ft_strjoin(cmd, ": command not found"), \
+		free_exit_msg(ft_strjoin(ft_strdup(cmd), ": command not found"), \
 			COM_N, va);
 	else if (access(path, F_OK) && c == 'p')
-		free_exit_msg(ft_strjoin(cmd, ": No such file or directory"), \
+		free_exit_msg(ft_strjoin(ft_strdup(cmd), ": No such file or directory"), \
 			NF_ND, va);
 	else if (access(path, X_OK))
-		free_exit_msg(ft_strjoin(cmd, ": permission denied: "), \
+		free_exit_msg(ft_strjoin(ft_strdup(cmd), ": permission denied: "), \
 			PERM_D, va);
 }
 

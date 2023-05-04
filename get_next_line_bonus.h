@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/01 10:18:32 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/17 19:19:47 by zouaraqa         ###   ########.fr       */
+/*   Created: 2022/11/01 08:59:48 by zouaraqa          #+#    #+#             */
+/*   Updated: 2023/05/01 09:48:52 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
-int	locate(char *s, char c)
-{
-	int	i;
+# include <stdlib.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <unistd.h>
+# include <limits.h>
 
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10000
+# endif
+
+char	*get_next_line(int fd);
+char	*ft_strjoin(char *s1, char *s2);
+int		locate(char *s, char c);
+size_t	ft_strlen(const char *s);
+
+#endif

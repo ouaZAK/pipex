@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checking.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/01 09:44:35 by zouaraqa          #+#    #+#             */
+/*   Updated: 2023/05/03 15:41:46 by zouaraqa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "pipex.h"
 
@@ -21,13 +32,13 @@ void	check_empty_cmd(char **av, t_vars *va)
 	if (va->split_with == 'h')
 	{
 		if (!va->cmd[0])
-			free_exit_msg(ft_strjoin(av[va->i + 3], \
+			free_exit_msg(ft_strjoin(ft_strdup(av[va->i + 3]), \
 				": command not found"), COM_N, va);
 	}
 	else
 	{
 		if (!va->cmd[0])
-			free_exit_msg(ft_strjoin(av[va->i + 2], \
+			free_exit_msg(ft_strjoin(ft_strdup(av[va->i + 2]), \
 				": command not found"), COM_N, va);
 	}
 }

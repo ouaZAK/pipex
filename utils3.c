@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/26 09:04:04 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/02/19 10:33:10 by zouaraqa         ###   ########.fr       */
+/*   Created: 2023/05/01 10:02:43 by zouaraqa          #+#    #+#             */
+/*   Updated: 2023/05/04 09:57:13 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,7 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!str)
-	{
-		free(s1);
-		s1 = NULL;
 		return (0);
-	}
 	i = 0;
 	j = 0;
 	while (s1 && s1[i])
@@ -35,7 +31,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2 && s2[j])
 		str[i++] = s2[j++];
 	str[i] = '\0';
-	s1 = NULL;
 	free(s1);
 	return (str);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parent_and_childs.c                                :+:      :+:    :+:   */
+/*   childs.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zouaraqa <zouaraqa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/19 10:39:35 by zouaraqa          #+#    #+#             */
-/*   Updated: 2023/03/07 09:39:43 by zouaraqa         ###   ########.fr       */
+/*   Created: 2023/05/01 09:45:06 by zouaraqa          #+#    #+#             */
+/*   Updated: 2023/05/03 15:42:15 by zouaraqa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ static void	check_last_file(char **av, int ac, t_vars *va)
 	{
 		va->fd = open(av[ac - 1], O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (va->fd == -1)
-			print_msg_error(ft_strjoin("pipex: ", av[ac - 1]), va);
+			print_msg_error(ft_strjoin(ft_strdup("pipex: "), av[ac - 1]));
 	}
 	else
 	{
 		va->fd = open(av[ac - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		if (va->fd == -1)
-			print_msg_error(ft_strjoin("pipex: ", av[ac - 1]), va);
+			print_msg_error(ft_strjoin(ft_strdup("pipex: "), av[ac - 1]));
 	}
 }
 
